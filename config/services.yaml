@@ -4,12 +4,19 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    app.pcloud_user_id: '%env(PCLOUD_CLIENT_USER_ID)%'
+    app.pcloud_password: '%env(PCLOUD_CLIENT_PASSWORD)%'
+    app.pcloud_client_id: '%env(PCLOUD_CLIENT_ID)%'
+    app.pcloud_client_secret: '%env(PCLOUD_CLIENT_SECRET)%'
+    app.pcloud_access_token: '%env(PCLOUD_ACCESS_TOKEN)%'
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $projectDir: '%kernel.project_dir%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -19,6 +26,14 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    App\Service\PCloudApi:
+        arguments:
+            - '%app.pcloud_user_id%'
+            - '%app.pcloud_password%'
+            - '%app.pcloud_client_id%'
+            - '%app.pcloud_client_secret%'
+            - '%app.pcloud_access_token%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
