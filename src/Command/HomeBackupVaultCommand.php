@@ -48,7 +48,7 @@ class HomeBackupVaultCommand extends Command
 
         $io->info("Zip files start...");
 
-        $zipPath = $basePath . "/upgrade/vault_backup_"  .  date("N") . ".zip";
+        $zipPath = $basePath . "/upgrade/vault.backup."  .  date("N") . ".zip";
         $zipFile = new ZipFile();
         $zipFile
             ->addDirRecursive($basePath . "/output/data")
